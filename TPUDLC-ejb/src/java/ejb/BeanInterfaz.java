@@ -114,6 +114,16 @@ public class BeanInterfaz implements BeanInterfazRemote {
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
+    @Override
+    public int getIdDocumento(DocumentoBean docBean) {
+        return dDao.getIdDocumento(docBean);
+    }
+
+    @Override
+    public int getIdPalabra(PalabraBean palBean) {
+        return pDao.getIdPalabra(palBean);
+    }
+
   
    
 }
