@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pe="http://primefaces.org/ui/extensions">
 
     <h:head>
         <title>Facelet Title</title>
@@ -22,7 +23,7 @@
     <h:body>
         <h:form id="form" enctype="multipart/form-data">
 
-            <br/><br/><br/>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
             <div style='border-top: 300px; border-bottom: 150px !important; text-align: center;'>
                 <p:inputText placeholder="Ingrese su busqueda" size="60" value="#{buscadorView.txtBusqueda}" />
@@ -40,18 +41,42 @@
                 <p:commandButton value="Buscar" ajax="false" update="display" actionListener="#{buscadorView.buscar_texto()}"/>
             </div>
 
-            <br/><br/><br/>
+            <br/><br/><br/><br/><br/><br/><br/><br/>
 
-            <p:fileUpload value="#{buscadorView.archivo}" mode="simple" />
-
+            <p:fileUpload value="#{buscadorView.archivo}" mode="simple" />            
             <p:commandButton value="Submit" ajax="false" actionListener="#{buscadorView.upload()}"/>
 
             <div style='border-bottom: 200px; text-align: center;'>
                 <h:outputText id="archivonombre" value="#{buscadorView.archivo.fileName}" />
             </div>
             
+            <br/><br/><br/><br/><br/><br/><br/><br/>
             
-            </h:form>
+            <p:dataTable rendered="#{!buscadorView.documentos.isEmpty()}" id="tabla" var="doc" value="#{buscadorView.documentos}"  rowKey="#{doc.id}">
+                <f:facet name="header">
+                    Documentos
+                </f:facet>
+
+                <p:column headerText="Id">
+                    <h:outputText value="#{doc.id}" />
+                </p:column>
+
+                <p:column headerText="Name">
+                    <h:outputText value="#{doc.nombre}" />
+                </p:column>
+
+                <p:column headerText="Date">
+                    <h:outputText value="#{doc.fecha_carga}" />
+                </p:column>
+            </p:dataTable>
+            
+            <br/><br/><br/><br/><br/><br/><br/><br/>
+            
+            <p:commandButton value="Actualizar" ajax="false" update="visor"/>
+            <pe:documentViewer id="visor" height="500" url="#{buscadorView.documento}"/> 
+            
+            
+        </h:form>
     </h:body>
 
 

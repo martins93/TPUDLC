@@ -39,21 +39,19 @@ public class PalabraDao {
 
     public void insertarPalabras(PalabraBean palBean) {
         Palabra pal = new Palabra(palBean);
-        
+
         Query q = em.createNamedQuery("PalabrasEntity.findByPalabra").setParameter("palabra", pal.getPalabra());
-        if(q.getResultList().isEmpty())
-        {
-        em.persist(pal.getEntity());
+        if (q.getResultList().isEmpty()) {
+            em.persist(pal.getEntity());
         }
     }
-    
-     public int getIdPalabra(PalabraBean palBean)
-    {
+
+    public int getIdPalabra(PalabraBean palBean) {
         PalabrasEntity palId;
         Palabra pal = new Palabra(palBean);
         Query q = em.createNamedQuery("PalabrasEntity.findByPalabra").setParameter("palabra", pal.getPalabra());
         palId = (PalabrasEntity) q.getResultList().get(0);
-        
+
         return palId.getId();
     }
 
