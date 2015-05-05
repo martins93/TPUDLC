@@ -65,4 +65,7 @@ public class BeanInterfaz implements BeanInterfazRemote {
         vDao.insertarVocabularios(voc);
     }
 
+
+  
+   
 }

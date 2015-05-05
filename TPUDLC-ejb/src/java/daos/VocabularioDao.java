@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import logics.Vocabulario;
 
 /**
@@ -34,7 +35,12 @@ public class VocabularioDao {
 
     public void insertarVocabularios(VocabularioBean vb) {
         Vocabulario voc = new Vocabulario(vb);
-        em.persist(voc.getEntity());
+        Query q = em.createNamedQuery("VocabularioEntity.findByCompositeId").setParameter("palabraId", vb.getPalabra_id()).setParameter("documentoId", vb.getDocumento_id());
+        if(q.getResultList().isEmpty())
+        {
+            em.persist(voc.getEntity());
+       
+        }
     }
 
 }

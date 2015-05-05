@@ -27,7 +27,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "VocabularioEntity.findAll", query = "SELECT v FROM VocabularioEntity v"),
     @NamedQuery(name = "VocabularioEntity.findByPalabraId", query = "SELECT v FROM VocabularioEntity v WHERE v.vocabularioEntityPK.palabraId = :palabraId"),
     @NamedQuery(name = "VocabularioEntity.findByDocumentoId", query = "SELECT v FROM VocabularioEntity v WHERE v.vocabularioEntityPK.documentoId = :documentoId"),
-    @NamedQuery(name = "VocabularioEntity.findByApariciones", query = "SELECT v FROM VocabularioEntity v WHERE v.apariciones = :apariciones")})
+    @NamedQuery(name = "VocabularioEntity.findByApariciones", query = "SELECT v FROM VocabularioEntity v WHERE v.apariciones = :apariciones"),
+    @NamedQuery(name = "VocabularioEntity.findByCompositeId", query = "SELECT v FROM VocabularioEntity v WHERE v.vocabularioEntityPK.palabraId = :palabraId AND v.vocabularioEntityPK.documentoId = :documentoId")})
+   
 public class VocabularioEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

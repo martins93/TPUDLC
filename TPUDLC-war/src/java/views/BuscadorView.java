@@ -6,6 +6,7 @@ import beans.PalabraBean;
 import beans.VocabularioBean;
 import ejb.BeanInterfazRemote;
 import ejb.BusquedaRemote;
+import ejb.IndexacionRemote;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -27,13 +28,14 @@ import org.primefaces.model.UploadedFile;
 @RequestScoped
 public class BuscadorView implements Serializable {
     
-   
+   @EJB
+   private IndexacionRemote indexacion;
 
-    @EJB
-    private BeanInterfazRemote bean;
+    //@EJB
+  //  private BeanInterfazRemote bean;
     
-    @EJB
-    private BusquedaRemote busqueda;
+   // @EJB
+   // private BusquedaRemote busqueda;
     
     private UploadedFile archivo;
     private InputStream is;
@@ -42,14 +44,14 @@ public class BuscadorView implements Serializable {
     private String txtBusqueda;
     
 
-    public void buscar_texto(){
+  /*  public void buscar_texto(){
         
         ArrayList<String> palabras = new ArrayList<>(Arrays.asList(txtBusqueda.split("[^a-zA-ZñÑá-úÁ-Ú]")));
         palabras.removeAll(Arrays.asList(null,""));
         
         System.out.println("Palabras Ingresadas: " + palabras);
         busqueda.buscar(palabras);
-    }
+    }*/
     
 
     public void upload() {
@@ -66,7 +68,8 @@ public class BuscadorView implements Serializable {
                     os.write(bytes, 0, read);
                 }
 
-                
+                indexacion.init(targetFile);
+                indexacion.leerArchivo();
               //  Files.copy(is, targetFile.toPath());
             } catch (IOException e) {
                 e.printStackTrace();
