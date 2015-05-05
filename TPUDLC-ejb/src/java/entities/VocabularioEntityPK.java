@@ -13,10 +13,11 @@ import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author Martin
+ * @author Salvador
  */
 @Embeddable
 public class VocabularioEntityPK implements Serializable {
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "palabra_id")
@@ -78,5 +79,5 @@ public class VocabularioEntityPK implements Serializable {
     public String toString() {
         return "entities.VocabularioEntityPK[ palabraId=" + palabraId + ", documentoId=" + documentoId + " ]";
     }
-    
+
 }

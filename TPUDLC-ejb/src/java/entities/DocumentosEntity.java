@@ -28,9 +28,9 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Martin
+ * @author Salvador
  */
-@Entity (name = "DocumentosEntity")
+@Entity
 @Table(name = "documentos")
 @XmlRootElement
 @NamedQueries({
@@ -39,6 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "DocumentosEntity.findByNombre", query = "SELECT d FROM DocumentosEntity d WHERE d.nombre = :nombre"),
     @NamedQuery(name = "DocumentosEntity.findByFechaCarga", query = "SELECT d FROM DocumentosEntity d WHERE d.fechaCarga = :fechaCarga")})
 public class DocumentosEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -128,5 +129,5 @@ public class DocumentosEntity implements Serializable {
     public String toString() {
         return "entities.DocumentosEntity[ id=" + id + " ]";
     }
-    
+
 }

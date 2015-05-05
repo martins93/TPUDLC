@@ -14,39 +14,36 @@ import entities.VocabularioEntity;
  * @author Martin
  */
 public class Palabra {
-    
+
     private PalabrasEntity entidad;
-    
-    public Palabra()
-    {
+
+    public Palabra() {
         entidad = new PalabrasEntity();
     }
-    public Palabra(PalabrasEntity pe)
-    {
+
+    public Palabra(PalabrasEntity pe) {
         this.entidad = pe;
     }
-    
-    public Palabra(PalabraBean palabra)
-    {
+
+    public Palabra(PalabraBean palabra) {
         this();
-        if(palabra.getId()!=0)
-        {
+        if (palabra.getId() != 0) {
             this.entidad.setId(palabra.getId());
         }
-        
+
         this.entidad.setCantDocumentos(palabra.getCant_documentos());
         this.entidad.setMaxAparicion(palabra.getMax_aparicion());
         this.entidad.setPalabra(palabra.getPalabra());
     }
-    
-    public int getId()
-    {
+
+    public int getId() {
         return this.entidad.getId();
     }
-    public void setId(int id)
-    {
-       this.entidad.setId(id);
+
+    public void setId(int id) {
+        this.entidad.setId(id);
     }
+
     public int getMax_aparicion() {
         return this.entidad.getMaxAparicion();
     }
@@ -71,17 +68,13 @@ public class Palabra {
         this.entidad.setPalabra(palabra);;
     }
 
-    
-    public PalabraBean getBean()
-    {
-    PalabraBean pb = new PalabraBean (getId(), getMax_aparicion(), getCant_documentos(), getPalabra());
-    return pb;
+    public PalabraBean getBean() {
+        PalabraBean pb = new PalabraBean(getId(), getMax_aparicion(), getCant_documentos(), getPalabra());
+        return pb;
     }
-    
-    public PalabrasEntity getEntity()
-    {
+
+    public PalabrasEntity getEntity() {
         return entidad;
     }
-    
-    
+
 }

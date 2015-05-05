@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Martin
+ * @author Salvador
  */
 @Entity
 @Table(name = "vocabulario")
@@ -29,6 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "VocabularioEntity.findByDocumentoId", query = "SELECT v FROM VocabularioEntity v WHERE v.vocabularioEntityPK.documentoId = :documentoId"),
     @NamedQuery(name = "VocabularioEntity.findByApariciones", query = "SELECT v FROM VocabularioEntity v WHERE v.apariciones = :apariciones")})
 public class VocabularioEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected VocabularioEntityPK vocabularioEntityPK;
@@ -108,5 +109,5 @@ public class VocabularioEntity implements Serializable {
     public String toString() {
         return "entities.VocabularioEntity[ vocabularioEntityPK=" + vocabularioEntityPK + " ]";
     }
-    
+
 }
