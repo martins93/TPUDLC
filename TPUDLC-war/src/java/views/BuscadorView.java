@@ -1,7 +1,6 @@
 package views;
 
 import beans.DocumentoBean;
-import ejb.BeanInterfazRemote;
 import ejb.BusquedaRemote;
 import ejb.IndexacionRemote;
 import java.io.File;
@@ -13,6 +12,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -25,9 +25,6 @@ public class BuscadorView implements Serializable {
 
     @EJB
     private IndexacionRemote indexacion;
-
-    @EJB
-    private BeanInterfazRemote bean;
 
     @EJB
     private BusquedaRemote busqueda;
@@ -51,11 +48,10 @@ public class BuscadorView implements Serializable {
 
     public void buscar_texto() {
         documentos = new ArrayList<>();
-        
-        ArrayList<String> palabras = new ArrayList<>(Arrays.asList(txtBusqueda.split("[^a-zA-ZñÑá-úÁ-Ú]")));
+        ArrayList<String> palabras = new ArrayList<>(Arrays.asList(txtBusqueda.split("[^a-zA-ZñÑá-ú�?-Ú]")));
         palabras.removeAll(Arrays.asList(null, ""));
         
-        for(String p : palabras) p=p.toLowerCase();
+        for(String p : palabras) p.toLowerCase(Locale.ENGLISH);
 
         System.out.println("PALABRAS EN LA VIEW: " + palabras);
         

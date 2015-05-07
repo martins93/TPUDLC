@@ -19,11 +19,15 @@ import logics.Vocabulario;
  *
  * @author Martin
  */
+
+
 public class VocabularioDao {
 
     @PersistenceContext(name = "TPUDLC-ejbPU")
 
     private EntityManager em;
+    
+    	
 
     public List<VocabularioBean> obtenerVocabulario() {
         List<VocabularioEntity> entidades = em.createNamedQuery("VocabularioEntity.findAll").getResultList();
@@ -50,14 +54,20 @@ public class VocabularioDao {
         return res;
     }
     
+  
     public void insertarVocabularios(VocabularioBean vb) {
+        
         Vocabulario voc = new Vocabulario(vb);
-        Query q = em.createNamedQuery("VocabularioEntity.findByCompositeId").setParameter("palabraId", vb.getPalabra_id()).setParameter("documentoId", vb.getDocumento_id());
-        if(q.getResultList().isEmpty())
-        {
-            em.persist(voc.getEntity());
+
+       // Query q = em.createNamedQuery("VocabularioEntity.findByCompositeId").setParameter("palabraId", vb.getPalabra_id()).setParameter("documentoId", vb.getDocumento_id());
+        //if(q.getResultList().isEmpty())
+        //{  
+         em.persist(voc.getEntity());        
        
+      // }
+
         }
-    }
+
+    
 
 }

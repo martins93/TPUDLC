@@ -33,8 +33,18 @@ public class DocumentoDao {
 
         return beans;
     }
-    
-    public List<DocumentoBean> obtenerDocumentos(Integer id){
+
+    public boolean obtenerDocumentos(String filtro) {
+        boolean estaDocumento = true;
+        List<DocumentosEntity> entidades = em.createNamedQuery("DocumentosEntity.findByNombre").setParameter("nombre", filtro).getResultList();
+        if (entidades.isEmpty()) {
+            estaDocumento = false;
+        }
+
+        return estaDocumento;
+    }
+
+    public List<DocumentoBean> obtenerDocumentos(Integer id) {
         List<DocumentosEntity> entidades = em.createNamedQuery("DocumentosEntity.findById").setParameter("id", id).getResultList();
         LinkedList<DocumentoBean> beans = new LinkedList<>();
         for (DocumentosEntity entidad : entidades) {
@@ -45,24 +55,21 @@ public class DocumentoDao {
     }
 
     public void insertarDocumentos(DocumentoBean docBean) {
+
         Documento doc = new Documento(docBean);
+
         Query q = em.createNamedQuery("DocumentosEntity.findByNombre").setParameter("nombre", doc.getNombre());
-        if(q.getResultList().isEmpty())
-        { 
+        if (q.getResultList().isEmpty()) {
             em.persist(doc.getEntity());
-            
         }
     }
-        
-    public int getIdDocumento(DocumentoBean docBean)
-    {
-        DocumentosEntity docId;
-        Documento doc = new Documento(docBean);
-        Query q = em.createNamedQuery("DocumentosEntity.findByNombre").setParameter("nombre", doc.getNombre());
-        docId = (DocumentosEntity) q.getResultList().get(0);
-        
-        return docId.getId();
+
+    public Integer getIdDocumento() {
+        Integer docId;
+        Query q = em.createNamedQuery("DocumentosEntity.findLast");
+        docId = (Integer) q.getResultList().get(0);
+
+        return docId;
     }
-        
-    
+
 }
