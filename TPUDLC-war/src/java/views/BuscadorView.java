@@ -3,7 +3,6 @@ package views;
 import beans.DocumentoBean;
 import ejb.BusquedaRemote;
 import ejb.IndexacionRemote;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -13,15 +12,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ComponentSystemEvent;
-import javax.swing.text.Document;
-import org.primefaces.event.SelectEvent;
-import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 
@@ -42,15 +36,7 @@ public class BuscadorView implements Serializable {
     private File targetFile;
     private String txtBusqueda;
     private List<DocumentoBean> documentos;
-    private String documento;
 
-    public String getDocumento() {
-        return documento;
-    }
-
-    public void setDocumento(String documento) {
-        this.documento = documento;
-    }
 
     public List<DocumentoBean> getDocumentos() {
         return documentos;
@@ -65,9 +51,12 @@ public class BuscadorView implements Serializable {
         documentos = new ArrayList<>();
         ArrayList<String> palabras = new ArrayList<>(Arrays.asList(txtBusqueda.split("[^a-zA-ZñÑá-ú�?-Ú]")));
         palabras.removeAll(Arrays.asList(null, ""));
+        
+        for(String p : palabras) p.toLowerCase(Locale.ENGLISH);
 
+        System.out.println("PALABRAS EN LA VIEW: " + palabras);
+        
         documentos = busqueda.buscar(palabras);
-        documento = "/" + documentos.get(0).getNombre();
     }
 
   

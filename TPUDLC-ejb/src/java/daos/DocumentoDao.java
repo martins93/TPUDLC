@@ -18,8 +18,6 @@ import logics.Documento;
  *
  * @author Martin
  */
-
-
 public class DocumentoDao {
 
     @PersistenceContext(name = "TPUDLC-ejbPU")
@@ -35,16 +33,14 @@ public class DocumentoDao {
 
         return beans;
     }
-    
-    public boolean obtenerDocumentos (String filtro)
-    {
-        boolean estaDocumento=true;
+
+    public boolean obtenerDocumentos(String filtro) {
+        boolean estaDocumento = true;
         List<DocumentosEntity> entidades = em.createNamedQuery("DocumentosEntity.findByNombre").setParameter("nombre", filtro).getResultList();
-        if(entidades.isEmpty())
-        {
-            estaDocumento=false;
+        if (entidades.isEmpty()) {
+            estaDocumento = false;
         }
-        
+
         return estaDocumento;
     }
     public List<DocumentoBean> obtenerDocumentos(Integer id) {
@@ -59,26 +55,21 @@ public class DocumentoDao {
     
   
     public void insertarDocumentos(DocumentoBean docBean) {
-        
-        
-        
+
         Documento doc = new Documento(docBean);
-        
+
         Query q = em.createNamedQuery("DocumentosEntity.findByNombre").setParameter("nombre", doc.getNombre());
-        if(q.getResultList().isEmpty())
-        { 
+        if (q.getResultList().isEmpty()) {
             em.persist(doc.getEntity());
         }
     }
-        
-    public Integer getIdDocumento()
-    {
+
+    public Integer getIdDocumento() {
         Integer docId;
         Query q = em.createNamedQuery("DocumentosEntity.findLast");
         docId = (Integer) q.getResultList().get(0);
-          
+
         return docId;
     }
-        
-    
+
 }
