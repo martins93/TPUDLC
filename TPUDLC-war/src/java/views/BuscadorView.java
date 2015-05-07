@@ -2,10 +2,9 @@
 package views;
 
 import beans.DocumentoBean;
-import beans.PalabraBean;
-import beans.VocabularioBean;
-import ejb.BeanInterfazRemote;
+import ejb.BusquedaRemote;
 import ejb.IndexacionRemote;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,12 +13,17 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ComponentSystemEvent;
+import javax.swing.text.Document;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 
@@ -30,27 +34,35 @@ public class BuscadorView implements Serializable {
    @EJB
    private IndexacionRemote indexacion;
 
-    //@EJB
-  //  private BeanInterfazRemote bean;
+  
     
-   // @EJB
-   // private BusquedaRemote busqueda;
+    @EJB
+    private BusquedaRemote busqueda;
     
     private UploadedFile archivo;
     private InputStream is;
     private OutputStream os;
     private File targetFile;
     private String txtBusqueda;
-    
+    List<DocumentoBean> docs;
+    DocumentoBean selectedDoc;
+  
 
-  /*  public void buscar_texto(){
+   public void buscar_texto(){
         
         ArrayList<String> palabras = new ArrayList<>(Arrays.asList(txtBusqueda.split("[^a-zA-ZñÑá-úÁ-Ú]")));
         palabras.removeAll(Arrays.asList(null,""));
         
         System.out.println("Palabras Ingresadas: " + palabras);
         busqueda.buscar(palabras);
-    }*/
+    }
+   
+   @PostConstruct
+   public void list()
+   {
+       docs = indexacion.listarDocumentos();
+       selectedDoc = docs.get(0);
+   }
     
 
     public void upload() {
@@ -66,7 +78,7 @@ public class BuscadorView implements Serializable {
                 while ((read = is.read(bytes)) != -1) {
                     os.write(bytes, 0, read);
                 }
-
+                
                 indexacion.init(targetFile);
                 indexacion.leerArchivo();
               //  Files.copy(is, targetFile.toPath());
@@ -113,6 +125,32 @@ public class BuscadorView implements Serializable {
     public void setTxtBusqueda(String txtBusqueda) {
         this.txtBusqueda = txtBusqueda;
     }
+      public List<DocumentoBean> getDocs() {
+        return docs;
+    }
+
+    public void setDocs(List<DocumentoBean> docs) {
+        this.docs = docs;
+    }
+
+    public DocumentoBean getSelectedDoc() {
+        return selectedDoc;
+    }
+
+    public void setSelectedDoc(DocumentoBean selectedDoc) {
+        this.selectedDoc = selectedDoc;
+    }
+    
+    
+    
+    //------------DOCUMENT VIEWER---------------
+    public void someAction(SelectEvent event) throws IOException {
+    // ...
+
+    ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+    ec.redirect(ec.getRequestContextPath() + "/showDoc.html");
+}
+    
     
 
 }

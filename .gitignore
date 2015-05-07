@@ -23,3 +23,5 @@ hs_err_pid*
 
 .nb-gradle/
 
+/TPUDLC-ejb/nbproject/private/
+/TPUDLC-war/nbproject/private/

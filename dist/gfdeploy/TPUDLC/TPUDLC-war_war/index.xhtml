@@ -39,6 +39,9 @@
             <div style='border-bottom: 200px; text-align: center;'>
                 <p:commandButton value="Buscar" ajax="false" update="display" actionListener="#{buscadorView.buscar_texto()}"/>
             </div>
+            
+           
+
 
             <br/><br/><br/>
 
@@ -50,6 +53,32 @@
                 <h:outputText id="archivonombre" value="#{buscadorView.archivo.fileName}" />
             </div>
             
+              <p:dataTable rendered="#{!buscadorView.docs.isEmpty()}" id="tabla" var="indexacion" value="#{buscadorView.docs}" selectionMode="single" selection="#{buscadorView.selectedDoc}" rowKey="#{indexacion.id}">
+                <f:facet name="header">
+                    Documentos
+                </f:facet>
+
+                  <p:ajax event="rowSelect" listener="#{buscadorView.someAction(event)}"/>              
+
+                <p:column headerText="Id">
+                    <h:outputText value="#{indexacion.id}" />
+                </p:column>
+
+                <p:column headerText="Name">
+                    <h:outputText value="#{indexacion.nombre}" />
+                </p:column>
+
+                <p:column headerText="Date">
+                    <h:outputText value="#{indexacion.fecha_carga}" />
+                </p:column>
+
+
+
+            </p:dataTable>
+            
+            <p:dialog header="Doc Info" widgetVar="docDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+               
+            </p:dialog>
             
             </h:form>
     </h:body>

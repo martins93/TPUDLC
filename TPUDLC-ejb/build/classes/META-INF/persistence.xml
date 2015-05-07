@@ -4,5 +4,4 @@
     <jta-data-source>jdbc/tpdlc</jta-data-source>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
   </persistence-unit>
-    
 </persistence>

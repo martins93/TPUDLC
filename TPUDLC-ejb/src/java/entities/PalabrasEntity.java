@@ -25,9 +25,9 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Martin
+ * @author Salvador
  */
-@Entity (name = "PalabrasEntity")
+@Entity
 @Table(name = "palabras")
 @XmlRootElement
 @NamedQueries({
@@ -35,8 +35,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "PalabrasEntity.findById", query = "SELECT p FROM PalabrasEntity p WHERE p.id = :id"),
     @NamedQuery(name = "PalabrasEntity.findByPalabra", query = "SELECT p FROM PalabrasEntity p WHERE p.palabra = :palabra"),
     @NamedQuery(name = "PalabrasEntity.findByMaxAparicion", query = "SELECT p FROM PalabrasEntity p WHERE p.maxAparicion = :maxAparicion"),
+    @NamedQuery(name = "PalabrasEntity.findLast", query = "SELECT MAX(p.id) FROM PalabrasEntity p"),
     @NamedQuery(name = "PalabrasEntity.findByCantDocumentos", query = "SELECT p FROM PalabrasEntity p WHERE p.cantDocumentos = :cantDocumentos")})
 public class PalabrasEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,14 +50,10 @@ public class PalabrasEntity implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "palabra")
     private String palabra;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "max_aparicion")
-    private int maxAparicion;
-    @Basic(optional = false)
-    @NotNull
+    private Integer maxAparicion;
     @Column(name = "cant_documentos")
-    private int cantDocumentos;
+    private Integer cantDocumentos;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "palabrasEntity")
     private List<VocabularioEntity> vocabularioEntityList;
 
@@ -66,11 +64,9 @@ public class PalabrasEntity implements Serializable {
         this.id = id;
     }
 
-    public PalabrasEntity(Integer id, String palabra, int maxAparicion, int cantDocumentos) {
+    public PalabrasEntity(Integer id, String palabra) {
         this.id = id;
         this.palabra = palabra;
-        this.maxAparicion = maxAparicion;
-        this.cantDocumentos = cantDocumentos;
     }
 
     public Integer getId() {
@@ -89,19 +85,19 @@ public class PalabrasEntity implements Serializable {
         this.palabra = palabra;
     }
 
-    public int getMaxAparicion() {
+    public Integer getMaxAparicion() {
         return maxAparicion;
     }
 
-    public void setMaxAparicion(int maxAparicion) {
+    public void setMaxAparicion(Integer maxAparicion) {
         this.maxAparicion = maxAparicion;
     }
 
-    public int getCantDocumentos() {
+    public Integer getCantDocumentos() {
         return cantDocumentos;
     }
 
-    public void setCantDocumentos(int cantDocumentos) {
+    public void setCantDocumentos(Integer cantDocumentos) {
         this.cantDocumentos = cantDocumentos;
     }
 
@@ -138,5 +134,5 @@ public class PalabrasEntity implements Serializable {
     public String toString() {
         return "entities.PalabrasEntity[ id=" + id + " ]";
     }
-    
+
 }
