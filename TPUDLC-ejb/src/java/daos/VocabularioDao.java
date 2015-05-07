@@ -5,6 +5,7 @@
  */
 package daos;
 
+import beans.PalabraBean;
 import beans.VocabularioBean;
 import entities.VocabularioEntity;
 import java.util.LinkedList;
@@ -36,6 +37,17 @@ public class VocabularioDao {
         }
         return lista;
     }
+    
+    public List<VocabularioBean> obtenerVocabulario(PalabraBean palabra){
+        List<VocabularioEntity> entidades = em.createNamedQuery("VocabularioEntity.findByPalabraId").setParameter("palabraId", palabra.getId()).getResultList();
+        LinkedList<VocabularioBean> lista = new LinkedList<>();
+        for (VocabularioEntity entidad : entidades) {
+            lista.add(new Vocabulario(entidad).getBean());
+        }
+        return lista;
+    }
+
+    public void insertarVocabularios(VocabularioBean vb) {
 
   
     public void insertarVocabularios(VocabularioBean vb) {

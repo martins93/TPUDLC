@@ -77,6 +77,7 @@ public class Indexacion implements IndexacionRemote {
         mapa = new HashMap<>();
         nombreDoc = f.getName();
         encoding = "";
+        System.out.println(nombreDoc);
     }
 
     public void changeF(String archivo) {

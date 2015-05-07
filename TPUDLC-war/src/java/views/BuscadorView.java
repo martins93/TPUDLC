@@ -1,4 +1,3 @@
-
 package views;
 
 import beans.DocumentoBean;
@@ -14,7 +13,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -30,41 +28,51 @@ import org.primefaces.model.UploadedFile;
 @ManagedBean
 @RequestScoped
 public class BuscadorView implements Serializable {
-    
-   @EJB
-   private IndexacionRemote indexacion;
 
-  
-    
+    @EJB
+    private IndexacionRemote indexacion;
+
+    @EJB
+    private BeanInterfazRemote bean;
+
     @EJB
     private BusquedaRemote busqueda;
-    
+
     private UploadedFile archivo;
     private InputStream is;
     private OutputStream os;
     private File targetFile;
     private String txtBusqueda;
-    List<DocumentoBean> docs;
-    DocumentoBean selectedDoc;
-  
+    private List<DocumentoBean> documentos;
+    private String documento;
 
-   public void buscar_texto(){
-        
-        ArrayList<String> palabras = new ArrayList<>(Arrays.asList(txtBusqueda.split("[^a-zA-ZñÑá-úÁ-Ú]")));
-        palabras.removeAll(Arrays.asList(null,""));
-        
-        System.out.println("Palabras Ingresadas: " + palabras);
-        busqueda.buscar(palabras);
+    public String getDocumento() {
+        return documento;
     }
-   
-   @PostConstruct
-   public void list()
-   {
-       docs = indexacion.listarDocumentos();
-       selectedDoc = docs.get(0);
-   }
+
+    public void setDocumento(String documento) {
+        this.documento = documento;
+    }
+
+    public List<DocumentoBean> getDocumentos() {
+        return documentos;
+    }
+
+    public void setDocumentos(List<DocumentoBean> documentos) {
+        this.documentos = documentos;
+    }
     
 
+    public void buscar_texto() {
+        documentos = new ArrayList<>();
+        ArrayList<String> palabras = new ArrayList<>(Arrays.asList(txtBusqueda.split("[^a-zA-ZñÑá-ú�?-Ú]")));
+        palabras.removeAll(Arrays.asList(null, ""));
+
+        documentos = busqueda.buscar(palabras);
+        documento = "/" + documentos.get(0).getNombre();
+    }
+
+  
     public void upload() {
         if (archivo != null) {
             try {
@@ -78,10 +86,10 @@ public class BuscadorView implements Serializable {
                 while ((read = is.read(bytes)) != -1) {
                     os.write(bytes, 0, read);
                 }
-                
+                System.out.println("NOMBRE Y DIRECCION ABSOLUTA DEL ARCHIVO PUTO: " + targetFile.getAbsolutePath());
                 indexacion.init(targetFile);
                 indexacion.leerArchivo();
-              //  Files.copy(is, targetFile.toPath());
+                //  Files.copy(is, targetFile.toPath());
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
@@ -105,11 +113,8 @@ public class BuscadorView implements Serializable {
 
         }
     }
-    
-    
-    
+
     // ----------- GETTERS & SETTERS ----------- 
-   
     public UploadedFile getArchivo() {
         return archivo;
     }
@@ -117,7 +122,7 @@ public class BuscadorView implements Serializable {
     public void setArchivo(UploadedFile archivo) {
         this.archivo = archivo;
     }
-    
+
     public String getTxtBusqueda() {
         return txtBusqueda;
     }
@@ -125,32 +130,5 @@ public class BuscadorView implements Serializable {
     public void setTxtBusqueda(String txtBusqueda) {
         this.txtBusqueda = txtBusqueda;
     }
-      public List<DocumentoBean> getDocs() {
-        return docs;
-    }
-
-    public void setDocs(List<DocumentoBean> docs) {
-        this.docs = docs;
-    }
-
-    public DocumentoBean getSelectedDoc() {
-        return selectedDoc;
-    }
-
-    public void setSelectedDoc(DocumentoBean selectedDoc) {
-        this.selectedDoc = selectedDoc;
-    }
-    
-    
-    
-    //------------DOCUMENT VIEWER---------------
-    public void someAction(SelectEvent event) throws IOException {
-    // ...
-
-    ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-    ec.redirect(ec.getRequestContextPath() + "/showDoc.html");
-}
-    
-    
 
 }
