@@ -5,6 +5,8 @@
         <group>
             <file>file:/C:/Users/Martin/Documents/MEGAsync/TPUDLC/TPUDLC-ejb/src/java/ejb/Indexacion.java</file>
             <file>file:/C:/Users/Martin/Documents/MEGAsync/TPUDLC/TPUDLC-ejb/src/java/daos/DocumentoDao.java</file>
+            <file>file:/C:/Users/Martin/Documents/MEGAsync/TPUDLC/TPUDLC-ejb/src/java/daos/VocabularioDao.java</file>
+            <file>file:/C:/Users/Martin/Documents/MEGAsync/TPUDLC/TPUDLC-ejb/src/java/ejb/Busqueda.java</file>
         </group>
     </open-files>
 </project-private>

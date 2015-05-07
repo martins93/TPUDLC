@@ -46,10 +46,7 @@ public class VocabularioDao {
         }
         return lista;
     }
-
-    public void insertarVocabularios(VocabularioBean vb) {
-
-  
+    
     public void insertarVocabularios(VocabularioBean vb) {
         
         Vocabulario voc = new Vocabulario(vb);

@@ -32,8 +32,6 @@ public class BuscadorView implements Serializable {
     @EJB
     private IndexacionRemote indexacion;
 
-    @EJB
-    private BeanInterfazRemote bean;
 
     @EJB
     private BusquedaRemote busqueda;
@@ -65,7 +63,7 @@ public class BuscadorView implements Serializable {
 
     public void buscar_texto() {
         documentos = new ArrayList<>();
-        ArrayList<String> palabras = new ArrayList<>(Arrays.asList(txtBusqueda.split("[^a-zA-ZñÑá-ú�?-Ú]")));
+        ArrayList<String> palabras = new ArrayList<>(Arrays.asList(txtBusqueda.split("[^a-zA-ZñÑá-ú�?-Ú]")));
         palabras.removeAll(Arrays.asList(null, ""));
 
         documentos = busqueda.buscar(palabras);

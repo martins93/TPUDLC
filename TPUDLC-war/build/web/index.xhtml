@@ -40,9 +40,6 @@
             <div style='border-bottom: 200px; text-align: center;'>
                 <p:commandButton value="Buscar" ajax="false" update="display" actionListener="#{buscadorView.buscar_texto()}"/>
             </div>
-            
-           
-
 
             <br/><br/><br/><br/><br/><br/><br/><br/>
 
@@ -53,40 +50,13 @@
                 <h:outputText id="archivonombre" value="#{buscadorView.archivo.fileName}" />
             </div>
             
-<<<<<<< HEAD
-              <p:dataTable rendered="#{!buscadorView.docs.isEmpty()}" id="tabla" var="indexacion" value="#{buscadorView.docs}" selectionMode="single" selection="#{buscadorView.selectedDoc}" rowKey="#{indexacion.id}">
-=======
             <br/><br/><br/><br/><br/><br/><br/><br/>
             
             <p:dataTable rendered="#{!buscadorView.documentos.isEmpty()}" id="tabla" var="doc" value="#{buscadorView.documentos}"  rowKey="#{doc.id}">
->>>>>>> 09dec1d227b893addc2e2e992b7550808ea63874
                 <f:facet name="header">
                     Documentos
                 </f:facet>
 
-<<<<<<< HEAD
-                  <p:ajax event="rowSelect" listener="#{buscadorView.someAction(event)}"/>              
-
-                <p:column headerText="Id">
-                    <h:outputText value="#{indexacion.id}" />
-                </p:column>
-
-                <p:column headerText="Name">
-                    <h:outputText value="#{indexacion.nombre}" />
-                </p:column>
-
-                <p:column headerText="Date">
-                    <h:outputText value="#{indexacion.fecha_carga}" />
-                </p:column>
-
-
-
-            </p:dataTable>
-            
-            <p:dialog header="Doc Info" widgetVar="docDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-               
-            </p:dialog>
-=======
                 <p:column headerText="Id">
                     <h:outputText value="#{doc.id}" />
                 </p:column>
@@ -101,11 +71,7 @@
             </p:dataTable>
             
             <br/><br/><br/><br/><br/><br/><br/><br/>
-            
-            <p:commandButton value="Actualizar" ajax="false" update="visor"/>
-            <pe:documentViewer id="visor" height="500" url="#{buscadorView.documento}"/> 
-            
->>>>>>> 09dec1d227b893addc2e2e992b7550808ea63874
+                        
             
         </h:form>
     </h:body>

@@ -47,6 +47,15 @@ public class DocumentoDao {
         
         return estaDocumento;
     }
+    public List<DocumentoBean> obtenerDocumentos(Integer id) {
+        List<DocumentosEntity> entidades = em.createNamedQuery("DocumentosEntity.findById").setParameter("id", id).getResultList();
+        LinkedList<DocumentoBean> beans = new LinkedList<>();
+        for (DocumentosEntity entidad : entidades) {
+            beans.add(new Documento(entidad).getBean());
+        }
+
+        return beans;
+    }
     
   
     public void insertarDocumentos(DocumentoBean docBean) {
