@@ -38,15 +38,7 @@ public class BuscadorView implements Serializable {
     private File targetFile;
     private String txtBusqueda;
     private List<DocumentoBean> documentos;
-    private String documento;
 
-    public String getDocumento() {
-        return documento;
-    }
-
-    public void setDocumento(String documento) {
-        this.documento = documento;
-    }
 
     public List<DocumentoBean> getDocumentos() {
         return documentos;
@@ -59,11 +51,15 @@ public class BuscadorView implements Serializable {
 
     public void buscar_texto() {
         documentos = new ArrayList<>();
+        
         ArrayList<String> palabras = new ArrayList<>(Arrays.asList(txtBusqueda.split("[^a-zA-ZñÑá-úÁ-Ú]")));
         palabras.removeAll(Arrays.asList(null, ""));
+        
+        for(String p : palabras) p=p.toLowerCase();
 
+        System.out.println("PALABRAS EN LA VIEW: " + palabras);
+        
         documentos = busqueda.buscar(palabras);
-        documento = "/" + documentos.get(0).getNombre();
     }
 
   

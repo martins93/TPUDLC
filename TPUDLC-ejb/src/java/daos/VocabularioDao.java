@@ -43,6 +43,13 @@ public class VocabularioDao {
         return lista;
     }
 
+    public Integer obtenerFrecuenciaTotal(Integer id){
+        List<VocabularioEntity> entidades = em.createNamedQuery("VocabularioEntity.findByPalabraId").setParameter("palabraId", id).getResultList();
+        Integer res=-1;
+        for(VocabularioEntity v : entidades) res+=v.getApariciones();
+        return res;
+    }
+    
     public void insertarVocabularios(VocabularioBean vb) {
         Vocabulario voc = new Vocabulario(vb);
         Query q = em.createNamedQuery("VocabularioEntity.findByCompositeId").setParameter("palabraId", vb.getPalabra_id()).setParameter("documentoId", vb.getDocumento_id());

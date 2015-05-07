@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "VocabularioEntity.findAll", query = "SELECT v FROM VocabularioEntity v"),
-    @NamedQuery(name = "VocabularioEntity.findByPalabraId", query = "SELECT v FROM VocabularioEntity v WHERE v.vocabularioEntityPK.palabraId = :palabraId"),
+    @NamedQuery(name = "VocabularioEntity.findByPalabraId", query = "SELECT v FROM VocabularioEntity v WHERE v.vocabularioEntityPK.palabraId = :palabraId ORDER BY v.apariciones DESC"),
     @NamedQuery(name = "VocabularioEntity.findByDocumentoId", query = "SELECT v FROM VocabularioEntity v WHERE v.vocabularioEntityPK.documentoId = :documentoId"),
     @NamedQuery(name = "VocabularioEntity.findByApariciones", query = "SELECT v FROM VocabularioEntity v WHERE v.apariciones = :apariciones"),
     @NamedQuery(name = "VocabularioEntity.findByCompositeId", query = "SELECT v FROM VocabularioEntity v WHERE v.vocabularioEntityPK.palabraId = :palabraId AND v.vocabularioEntityPK.documentoId = :documentoId")})
