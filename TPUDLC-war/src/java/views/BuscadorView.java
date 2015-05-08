@@ -51,10 +51,6 @@ public class BuscadorView implements Serializable {
         ArrayList<String> palabras = new ArrayList<>(Arrays.asList(txtBusqueda.split("[^a-zA-ZñÑá-ú�?-Ú]")));
         palabras.removeAll(Arrays.asList(null, ""));
         
-        for(String p : palabras) p.toLowerCase(Locale.ENGLISH);
-
-        System.out.println("PALABRAS EN LA VIEW: " + palabras);
-        
         documentos = busqueda.buscar(palabras);
     }
 
@@ -72,7 +68,6 @@ public class BuscadorView implements Serializable {
                 while ((read = is.read(bytes)) != -1) {
                     os.write(bytes, 0, read);
                 }
-                System.out.println("NOMBRE Y DIRECCION ABSOLUTA DEL ARCHIVO PUTO: " + targetFile.getAbsolutePath());
                 indexacion.init(targetFile);
                 indexacion.leerArchivo();
                 //  Files.copy(is, targetFile.toPath());

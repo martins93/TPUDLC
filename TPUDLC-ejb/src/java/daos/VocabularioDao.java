@@ -49,7 +49,7 @@ public class VocabularioDao {
 
     public Integer obtenerFrecuenciaTotal(Integer id){
         List<VocabularioEntity> entidades = em.createNamedQuery("VocabularioEntity.findByPalabraId").setParameter("palabraId", id).getResultList();
-        Integer res=-1;
+        Integer res=0;
         for(VocabularioEntity v : entidades) res+=v.getApariciones();
         return res;
     }
