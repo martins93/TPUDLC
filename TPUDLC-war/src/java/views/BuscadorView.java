@@ -14,13 +14,19 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
 import org.primefaces.model.UploadedFile;
 
 
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class BuscadorView implements Serializable {
 
     @EJB
@@ -36,7 +42,9 @@ public class BuscadorView implements Serializable {
     private File targetFile;
     private String txtBusqueda;
     private List<DocumentoBean> documentos;
+    private DocumentoBean selectedDoc;
 
+  
 
     public List<DocumentoBean> getDocumentos() {
         return documentos;
@@ -102,6 +110,16 @@ public class BuscadorView implements Serializable {
     }
 
     // ----------- GETTERS & SETTERS ----------- 
+      public DocumentoBean getSelectedDoc() {
+        return selectedDoc;
+    }
+
+    public void setSelectedDoc(DocumentoBean selectedDoc) {
+        this.selectedDoc = selectedDoc;
+    
+    }
+
+    
     public UploadedFile getArchivo() {
         return archivo;
     }
@@ -117,5 +135,26 @@ public class BuscadorView implements Serializable {
     public void setTxtBusqueda(String txtBusqueda) {
         this.txtBusqueda = txtBusqueda;
     }
+    
+    //---------MOSTRAR DOCUMENTO---------
+    public void onRowSelect(SelectEvent event) {
+        System.out.println("ENTRE AL ROWSELECT");
+       FacesMessage msg = new FacesMessage("ABRIENDO DOCUMENTO SELECCIONADO", ((DocumentoBean) event.getObject()).getNombre());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+      
+    }
+      public void onRowUnselect(UnselectEvent event) throws IOException {
+          System.out.println("ENTRE AL ROW UNSELECT");
+          FacesMessage msg = new FacesMessage("Car Unselected", ((DocumentoBean) event.getObject()).getNombre());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+      }
+    
+    public void redirect() throws IOException {
+        System.out.println("REDIRECCIONAR");
+        FacesContext fContext = FacesContext.getCurrentInstance();
+        ExternalContext extContext = fContext.getExternalContext();
+        extContext.redirect(extContext.getRequestContextPath() + "/welcome.xhtml");
+    }
+ 
 
 }
