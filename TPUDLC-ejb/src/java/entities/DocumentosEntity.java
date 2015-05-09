@@ -37,6 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "DocumentosEntity.findAll", query = "SELECT d FROM DocumentosEntity d"),
     @NamedQuery(name = "DocumentosEntity.findById", query = "SELECT d FROM DocumentosEntity d WHERE d.id = :id"),
     @NamedQuery(name = "DocumentosEntity.findByNombre", query = "SELECT d FROM DocumentosEntity d WHERE d.nombre = :nombre"),
+    /*@NamedQuery(name = "DocumentosEntity.count", query = "SELECT COUNT(*) FROM DocumentosEntity d"),*/
     @NamedQuery(name = "DocumentosEntity.findByFechaCarga", query = "SELECT d FROM DocumentosEntity d WHERE d.fechaCarga = :fechaCarga"),
     @NamedQuery(name = "DocumentosEntity.findLast", query = "SELECT MAX(d.id) FROM DocumentosEntity d")})
 public class DocumentosEntity implements Serializable {

@@ -52,8 +52,13 @@ public class DocumentoDao {
 
         return beans;
     }
+
     
-  
+    /*public Integer cantidadDocumentosTotal(){
+        Integer res = (Integer) em.createNamedQuery("DocumentosEntity.count").getSingleResult();
+        return res;                
+    }*/
+    
     public void insertarDocumentos(DocumentoBean docBean) {
 
         Documento doc = new Documento(docBean);
