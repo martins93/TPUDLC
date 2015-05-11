@@ -5,9 +5,12 @@
  */
 package ejb;
 
+import beans.DocumentoBean;
 import daos.DocumentoDao;
 import java.io.File;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Schedule;
 import javax.ejb.Stateless;
@@ -29,12 +32,15 @@ public class Timer implements TimerRemote {
     String sDirectorio = "C:\\TextosAIndexar";
     File f = new File(sDirectorio);
     File[] files;
+    HashMap<String, DocumentoBean> docs;
     
     @Inject
     DocumentoDao dDao;
     
     @EJB
     IndexacionRemote index;
+    
+    String extension;
    
 
     @Schedule(dayOfWeek = "*", month = "*", hour = "*", dayOfMonth = "*", year = "*", minute = "*", second = "0")
@@ -45,14 +51,17 @@ public class Timer implements TimerRemote {
  
         
         System.out.println("EJECUTANDO TIMER...");
+        /*
        if (f.exists())
                 {
                   files = f.listFiles();
+                  docs = dDao.cargarHashDocs();
                   if(files.length>0)
                   {
                       for (int i = 0; i < files.length; i++) {
                           
-                          if(!dDao.obtenerDocumentos(files[i].getName()))
+                          extension = files[i].getName().substring(files[i].getName().lastIndexOf(".") + 1, files[i].getName().length());
+                          if((!docs.containsKey(files[i].getName())) && extension.equals("txt"))
                           {
                               System.out.println("NUEVO DOCUMENTO ENCONTRADO");
                               System.out.println("DOCUMENTO:" + files[i].getName());
@@ -63,6 +72,7 @@ public class Timer implements TimerRemote {
                       }
                      }
                 }
+                */
     }
     
 

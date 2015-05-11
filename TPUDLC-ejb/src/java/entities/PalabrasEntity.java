@@ -36,6 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "PalabrasEntity.findByPalabra", query = "SELECT p FROM PalabrasEntity p WHERE p.palabra = :palabra"),
     @NamedQuery(name = "PalabrasEntity.findByMaxAparicion", query = "SELECT p FROM PalabrasEntity p WHERE p.maxAparicion = :maxAparicion"),
     @NamedQuery(name = "PalabrasEntity.findLast", query = "SELECT MAX(p.id) FROM PalabrasEntity p"),
+    @NamedQuery(name = "PalabrasEntity.findOrdered", query = "SELECT p FROM PalabrasEntity p ORDER BY p.id"),
     @NamedQuery(name = "PalabrasEntity.findByCantDocumentos", query = "SELECT p FROM PalabrasEntity p WHERE p.cantDocumentos = :cantDocumentos")})
 public class PalabrasEntity implements Serializable {
 

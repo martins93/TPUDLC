@@ -3,30 +3,40 @@ package views;
 import beans.DocumentoBean;
 import ejb.BusquedaRemote;
 import ejb.IndexacionRemote;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.stream.Stream;
 import javax.ejb.EJB;
+import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletResponse;
+import org.primefaces.component.datatable.DataTable;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 import org.primefaces.model.UploadedFile;
 
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class BuscadorView implements Serializable {
 
     @EJB
@@ -43,6 +53,7 @@ public class BuscadorView implements Serializable {
     private String txtBusqueda;
     private List<DocumentoBean> documentos;
     private DocumentoBean selectedDoc;
+    private String nomDoc;
 
   
 
@@ -130,26 +141,59 @@ public class BuscadorView implements Serializable {
     public void setTxtBusqueda(String txtBusqueda) {
         this.txtBusqueda = txtBusqueda;
     }
+
+    public String getNomDoc() {
+        return nomDoc;
+    }
+
+    public void setNomDoc(String nomDoc) {
+        this.nomDoc = nomDoc;
+    }
     
     //---------MOSTRAR DOCUMENTO---------
-    public void onRowSelect(SelectEvent event) {
+    public void render() throws IOException {
         System.out.println("ENTRE AL ROWSELECT");
-       FacesMessage msg = new FacesMessage("ABRIENDO DOCUMENTO SELECCIONADO", ((DocumentoBean) event.getObject()).getNombre());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-      
-    }
-      public void onRowUnselect(UnselectEvent event) throws IOException {
-          System.out.println("ENTRE AL ROW UNSELECT");
-          FacesMessage msg = new FacesMessage("Car Unselected", ((DocumentoBean) event.getObject()).getNombre());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-      }
+        
+        
+        FacesContext fc = FacesContext.getCurrentInstance();
+    ExternalContext ec = fc.getExternalContext();
     
-    public void redirect() throws IOException {
-        System.out.println("REDIRECCIONAR");
-        FacesContext fContext = FacesContext.getCurrentInstance();
-        ExternalContext extContext = fContext.getExternalContext();
-        extContext.redirect(extContext.getRequestContextPath() + "/welcome.xhtml");
-    }
- 
 
+
+    
+    String nombre = selectedDoc.getNombre();
+    String url = "C:/TextosAIndexar/" + nombre;
+        System.out.println("***EL PARAM: "+ url);
+    
+    
+                    BufferedReader br = null;
+                        String sCurrentLine;
+                        StringBuilder sB = new StringBuilder();
+ 
+			br = new BufferedReader(new FileReader(url));
+ 
+			while ((sCurrentLine = br.readLine()) != null) {
+				sB.append(sCurrentLine);
+                                sB.append("\n");
+			}
+    
+    ec.setResponseContentType("text/plain");
+    ec.setResponseCharacterEncoding("UTF-8");
+    ec.getResponseOutputWriter().write(sB.toString());
+    // ...
+
+
+    fc.responseComplete();
+          
+
+    
+    }
+    
+    public void onRowSelect()
+    {
+        FacesContext context = FacesContext.getCurrentInstance();       
+        context.getApplication().getNavigationHandler().handleNavigation(context, null, "showDoc.xhtml?faces-redirect=true");
+    }
+    
+    
 }

@@ -108,6 +108,8 @@ public class Indexacion implements IndexacionRemote {
         }
         System.out.println("HASH CARGADO");
         System.out.println("POR INSERTAR...");
+        System.out.println("RUTA ARCHIVO: " +f.getAbsolutePath());
+        System.out.println(f.toString());
         
         
         insertar(mapa);
@@ -143,6 +145,7 @@ public class Indexacion implements IndexacionRemote {
                 
         it = mapa.keySet().iterator();
         
+        System.out.println("POR CARGAR HASH DE LA DB");
         HashMap<String, PalabraBean> hashDB = pDao.cargarHashPalabras();
         System.out.println("CARGUE HASH PALABRSA DE LA DB");
         
@@ -156,10 +159,10 @@ public class Indexacion implements IndexacionRemote {
                       System.out.println("ARRANCO EL BEGIN");
                        int contador = 0;
                        
-                       documento = new DocumentoBean(today,nombreDoc);
-                       dDao.insertarDocumentos(documento);
-                       idDoc = dDao.getIdDocumento();
-                       System.out.println("EL HASHMAP TIENE: " + mapa.size()+ "PALABRAS");
+                     documento = new DocumentoBean(today,nombreDoc);
+                     dDao.insertarDocumentos(documento);
+                     idDoc = dDao.getIdDocumento();
+                     System.out.println("EL HASHMAP TIENE: " + mapa.size()+ "PALABRAS");
                        while (it.hasNext()) {
          
            

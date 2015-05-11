@@ -7,6 +7,7 @@ package daos;
 
 import beans.DocumentoBean;
 import entities.DocumentosEntity;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -30,8 +31,22 @@ public class DocumentoDao {
         for (DocumentosEntity entidad : entidades) {
             beans.add(new Documento(entidad).getBean());
         }
+        
+        
 
         return beans;
+    }
+    
+    public HashMap<String, DocumentoBean> cargarHashDocs()
+    {
+        HashMap<String, DocumentoBean> hashDB = new HashMap<>();
+         List<DocumentoBean> beans = obtenerDocumentos();
+         for(DocumentoBean palbean : beans)
+         {
+             hashDB.put(palbean.getNombre(), palbean);
+         }
+         
+         return hashDB;
     }
 
     public boolean obtenerDocumentos(String filtro) {
