@@ -42,11 +42,10 @@ import javax.transaction.UserTransaction;
 @Stateless
 @TransactionManagement(BEAN)
 public class Indexacion implements IndexacionRemote {
-    
-  @Resource
-  private UserTransaction u;    
-     
-    
+
+    @Resource
+    private UserTransaction u;
+
     @Inject
     DocumentoDao dDao;
 
@@ -55,9 +54,6 @@ public class Indexacion implements IndexacionRemote {
 
     @Inject
     VocabularioDao vDao;
-    
-    
-   
 
     private File f;
     private HashMap<String, VocabularioModel> mapa;
@@ -66,8 +62,7 @@ public class Indexacion implements IndexacionRemote {
 
     public Indexacion() {
     }
-   
-    
+
     @Override
     public void init(File f) {
         this.f = f;
@@ -108,12 +103,10 @@ public class Indexacion implements IndexacionRemote {
         }
         System.out.println("HASH CARGADO");
         System.out.println("POR INSERTAR...");
-        
-        
+
         insertar(mapa);
-        
+
         System.out.println("YA INSERTE");
-      
 
     }
 
@@ -127,92 +120,75 @@ public class Indexacion implements IndexacionRemote {
             mapa.put(palabra, nuevo);
         }
     }
+
     //@TransactionAttribute(REQUIRED)
+
     public void insertar(HashMap<String, VocabularioModel> mapa) {
-        
-        
+
         Iterator it;
         Integer idDoc;
-        String key; 
+        String key;
         Date today = new Date();
-        VocabularioModel v; 
-        
+        VocabularioModel v;
+
         DocumentoBean documento;
         PalabraBean palabra;
         VocabularioBean vocabulario;
-                
+
         it = mapa.keySet().iterator();
-        
+
         HashMap<String, PalabraBean> hashDB = pDao.cargarHashPalabras();
         System.out.println("CARGUE HASH PALABRSA DE LA DB");
-        
-       
-        
-     
-        try
-             {
-           
-                      u.begin();
-                      System.out.println("ARRANCO EL BEGIN");
-                       int contador = 0;
-                       
-                       documento = new DocumentoBean(today,nombreDoc);
-                       dDao.insertarDocumentos(documento);
-                       idDoc = dDao.getIdDocumento();
-                       System.out.println("EL HASHMAP TIENE: " + mapa.size()+ "PALABRAS");
-                       while (it.hasNext()) {
-         
-           
-               
-               key = it.next().toString();
-               v = (VocabularioModel) mapa.get(key);
-            
-               palabra = new PalabraBean(1,1,v.getPalabra());
-                
-               
-                   if(hashDB.containsKey(palabra.getPalabra()))
-                   {
-                       vocabulario = new VocabularioBean(hashDB.get(palabra.getPalabra()).getId(),idDoc, v.getFrecuencia());
-                       vDao.insertarVocabularios(vocabulario);
-                   }
-                   else
-                   {
-                       pDao.insertarPalabras(palabra);
-                       vocabulario = new VocabularioBean(pDao.getIdPalabra(),idDoc, v.getFrecuencia());
-                       vDao.insertarVocabularios(vocabulario);
-                   }
-                   
-                   contador++;
-                   System.out.println(contador);
-             }
-                     u.commit();
-                      System.out.println("COMITIO");
-                  
-           
-               }
-               catch (NotSupportedException | SystemException | RollbackException | HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException e)
-               {
-                   try {
-                       System.out.println("SALTO UNA EXCEPTION DE TRANSACCION");
-                       u.rollback();
-                   } catch (IllegalStateException | SecurityException | SystemException ex) {
-                       Logger.getLogger(Indexacion.class.getName()).log(Level.SEVERE, null, ex);    
-                   }  
-               }
-                
+
+        try {
+
+            u.begin();
+            System.out.println("ARRANCO EL BEGIN");
+            int contador = 0;
+
+            documento = new DocumentoBean(today, nombreDoc);
+            dDao.insertarDocumentos(documento);
+            idDoc = dDao.getIdDocumento(); 
+           System.out.println("EL HASHMAP TIENE: " + mapa.size() + "PALABRAS");
+            while (it.hasNext()) {
+
+                key = it.next().toString();
+                v = (VocabularioModel) mapa.get(key);
+
+                palabra = new PalabraBean(1, 1, v.getPalabra());
+
+                if (hashDB.containsKey(palabra.getPalabra())) {
+                    vocabulario = new VocabularioBean(hashDB.get(palabra.getPalabra()).getId(), idDoc, v.getFrecuencia());
+                    vDao.insertarVocabularios(vocabulario);
+                } else {
+                    pDao.insertarPalabras(palabra);
+                    vocabulario = new VocabularioBean(pDao.getIdPalabra(), idDoc, v.getFrecuencia());
+                    vDao.insertarVocabularios(vocabulario);
+                }
+
+                contador++;
+                System.out.println(contador);
+            }
+            u.commit();
+            System.out.println("COMITIO");
+
+        } catch (NotSupportedException | SystemException | RollbackException | HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException e) {
+            try {
+                System.out.println("SALTO UNA EXCEPTION DE TRANSACCION");
+                u.rollback();
+            } catch (IllegalStateException | SecurityException | SystemException ex) {
+                Logger.getLogger(Indexacion.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-               
-    
+
+    }
 
     public String getNombreArchivo() {
         return nombreDoc;
     }
-    
-  
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
-
     @Override
     public List<DocumentoBean> listarDocumentos() {
         return dDao.obtenerDocumentos();
