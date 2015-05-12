@@ -3,8 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:pe="http://primefaces.org/ui/extensions">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
         <title>Facelet Title</title>
@@ -23,7 +22,11 @@
     <h:body>
         <h:form id="form" enctype="multipart/form-data">
 
-            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            <br/><br/><br/><br/><br/>
+
+            <div style='border-top: 300px; border-bottom: 150px !important; text-align: center;'>
+                <h:graphicImage library="img" name="Poogle.png" />
+            </div>                        
 
             <div style='border-top: 300px; border-bottom: 150px !important; text-align: center;'>
                 <p:inputText placeholder="Ingrese su busqueda" size="60" value="#{buscadorView.txtBusqueda}" />
@@ -31,31 +34,24 @@
 
             <br/>
 
-            <div style='border-bottom: 200px; text-align: center;'>
-                <h:outputText id="display" value="#{buscadorView.txtBusqueda}" />
-            </div>
-
             <br/>
 
             <div style='border-bottom: 200px; text-align: center;'>
                 <p:commandButton value="Buscar" ajax="false" update="display" actionListener="#{buscadorView.buscar_texto()}"/>
             </div>
 
+
+
             <br/><br/><br/><br/><br/><br/><br/><br/>
 
-            <p:fileUpload value="#{buscadorView.archivo}" mode="simple" />            
-            <p:commandButton value="Submit" ajax="false" actionListener="#{buscadorView.upload()}"/>
-
-            <div style='border-bottom: 200px; text-align: center;'>
-                <h:outputText id="archivonombre" value="#{buscadorView.archivo.fileName}" />
-            </div>
-            
-            <br/><br/><br/><br/><br/><br/><br/><br/>
-            
-            <p:dataTable rendered="#{!buscadorView.documentos.isEmpty()}" id="tabla" var="doc" value="#{buscadorView.documentos}"  rowKey="#{doc.id}">
+            <p:dataTable rendered="#{buscadorView.documentos.isEmpty()}" id="tabla" var="doc" value="#{buscadorView.documentos}" selectionMode="single"  selection="#{buscadorView.selectedDoc}" rowKey="#{doc.id}">
                 <f:facet name="header">
                     Documentos
                 </f:facet>
+
+
+                <p:ajax event="rowSelect" listener="#{buscadorView.onRowSelect()}"/>
+
 
                 <p:column headerText="Id">
                     <h:outputText value="#{doc.id}" />
@@ -69,10 +65,35 @@
                     <h:outputText value="#{doc.fecha_carga}" />
                 </p:column>
             </p:dataTable>
-            
+
             <br/><br/><br/><br/><br/><br/><br/><br/>
-                        
-            
+
+            <div align="right">
+                <p:fileUpload value="#{buscadorView.archivo}" mode="simple" /> <br/>        
+                <div style="margin-right: 140px;">
+                    <p:commandButton value="Submit" ajax="false" actionListener="#{buscadorView.upload()}"/>  
+                </div>
+                <div style='border-bottom: 200px; text-align: center;'>
+                    <h:outputText id="archivonombre" value="#{buscadorView.archivo.fileName}" />
+                </div>
+            </div>
+
+
+
+
+            <br/><br/><br/><br/><br/><br/><br/><br/>
+
+
+            <p:dialog header="" widgetVar="docDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="docDetail" style="text-align:center;">              
+                    <p:panelGrid  columns="0" rendered="true" columnClasses="label,value">
+                        <h:outputText value="" />
+                    </p:panelGrid>
+
+                </p:outputPanel>
+            </p:dialog>
+
+
         </h:form>
     </h:body>
 

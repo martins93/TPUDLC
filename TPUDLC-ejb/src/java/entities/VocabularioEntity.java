@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entities;
 
 import java.io.Serializable;
@@ -16,10 +11,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author Salvador
- */
 @Entity
 @Table(name = "vocabulario")
 @XmlRootElement
@@ -29,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "VocabularioEntity.findByDocumentoId", query = "SELECT v FROM VocabularioEntity v WHERE v.vocabularioEntityPK.documentoId = :documentoId"),
     @NamedQuery(name = "VocabularioEntity.findByApariciones", query = "SELECT v FROM VocabularioEntity v WHERE v.apariciones = :apariciones"),
     @NamedQuery(name = "VocabularioEntity.findByCompositeId", query = "SELECT v FROM VocabularioEntity v WHERE v.vocabularioEntityPK.palabraId = :palabraId AND v.vocabularioEntityPK.documentoId = :documentoId")})
-   
+
 public class VocabularioEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -96,7 +87,6 @@ public class VocabularioEntity implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof VocabularioEntity)) {
             return false;
         }

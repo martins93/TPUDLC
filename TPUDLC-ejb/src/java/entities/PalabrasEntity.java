@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entities;
 
 import java.io.Serializable;
@@ -23,10 +18,6 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author Salvador
- */
 @Entity
 @Table(name = "palabras")
 @XmlRootElement
@@ -36,6 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "PalabrasEntity.findByPalabra", query = "SELECT p FROM PalabrasEntity p WHERE p.palabra = :palabra"),
     @NamedQuery(name = "PalabrasEntity.findByMaxAparicion", query = "SELECT p FROM PalabrasEntity p WHERE p.maxAparicion = :maxAparicion"),
     @NamedQuery(name = "PalabrasEntity.findLast", query = "SELECT MAX(p.id) FROM PalabrasEntity p"),
+    @NamedQuery(name = "PalabrasEntity.findOrdered", query = "SELECT p FROM PalabrasEntity p ORDER BY p.id"),
     @NamedQuery(name = "PalabrasEntity.findByCantDocumentos", query = "SELECT p FROM PalabrasEntity p WHERE p.cantDocumentos = :cantDocumentos")})
 public class PalabrasEntity implements Serializable {
 
@@ -119,7 +111,6 @@ public class PalabrasEntity implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof PalabrasEntity)) {
             return false;
         }

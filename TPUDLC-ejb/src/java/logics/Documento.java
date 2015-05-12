@@ -1,18 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package logics;
 
 import beans.DocumentoBean;
 import entities.DocumentosEntity;
 import java.util.Date;
 
-/**
- *
- * @author Martin
- */
 public class Documento {
 
     private DocumentosEntity entidad;

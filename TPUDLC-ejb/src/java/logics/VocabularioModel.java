@@ -1,20 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package logics;
 
-/**
- *
- * @author Martin
- */
 public class VocabularioModel {
-    
-     private String palabra;
+
+    private String palabra;
     private Integer frecuencia;
     private String nombreDoc;
-
 
     public VocabularioModel() {
         this.palabra = "";
@@ -46,7 +36,6 @@ public class VocabularioModel {
         return frecuencia;
     }
 
-
     public void setPalabra(String palabra) {
         this.palabra = palabra;
     }
@@ -59,11 +48,9 @@ public class VocabularioModel {
         this.frecuencia = frecuencia;
     }
 
-
-
     @Override
     public String toString() {
         return "Vocabulario{" + "palabra=" + palabra + ", frecuencia=" + frecuencia + ", nombreDocumento=" + nombreDoc + '}';
     }
-    
+
 }

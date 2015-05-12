@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entities;
 
 import java.io.Serializable;
@@ -26,10 +21,6 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author Salvador
- */
 @Entity
 @Table(name = "documentos")
 @XmlRootElement
@@ -37,7 +28,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "DocumentosEntity.findAll", query = "SELECT d FROM DocumentosEntity d"),
     @NamedQuery(name = "DocumentosEntity.findById", query = "SELECT d FROM DocumentosEntity d WHERE d.id = :id"),
     @NamedQuery(name = "DocumentosEntity.findByNombre", query = "SELECT d FROM DocumentosEntity d WHERE d.nombre = :nombre"),
-    /*@NamedQuery(name = "DocumentosEntity.count", query = "SELECT COUNT(*) FROM DocumentosEntity d"),*/
     @NamedQuery(name = "DocumentosEntity.findByFechaCarga", query = "SELECT d FROM DocumentosEntity d WHERE d.fechaCarga = :fechaCarga"),
     @NamedQuery(name = "DocumentosEntity.findLast", query = "SELECT MAX(d.id) FROM DocumentosEntity d")})
 public class DocumentosEntity implements Serializable {
@@ -116,7 +106,6 @@ public class DocumentosEntity implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof DocumentosEntity)) {
             return false;
         }

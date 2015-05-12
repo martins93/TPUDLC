@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ejb;
 
 import beans.DocumentoBean;
@@ -35,10 +30,6 @@ import logics.EncodingDetector;
 import logics.VocabularioModel;
 import javax.transaction.UserTransaction;
 
-/**
- *
- * @author Martin
- */
 @Stateless
 @TransactionManagement(BEAN)
 public class Indexacion implements IndexacionRemote {
@@ -69,7 +60,7 @@ public class Indexacion implements IndexacionRemote {
         mapa = new HashMap<>();
         nombreDoc = f.getName();
         encoding = "";
-        System.out.println(nombreDoc);
+        //System.out.println(nombreDoc);
     }
 
     public void changeF(String archivo) {
@@ -97,16 +88,18 @@ public class Indexacion implements IndexacionRemote {
             }
 
         } catch (FileNotFoundException e) {
-            System.out.println("No se encontro el archivo");
+            //System.out.println("No se encontro el archivo");
         } catch (IOException e) {
-            System.out.println("Error entrada/salida");
+            //System.out.println("Error entrada/salida");
         }
-        System.out.println("HASH CARGADO");
-        System.out.println("POR INSERTAR...");
+        //System.out.println("HASH CARGADO");
+        //System.out.println("POR INSERTAR...");
+        //System.out.println("RUTA ARCHIVO: " + f.getAbsolutePath());
+        //System.out.println(f.toString());
 
         insertar(mapa);
 
-        System.out.println("YA INSERTE");
+        //System.out.println("YA INSERTE");
 
     }
 
@@ -120,8 +113,6 @@ public class Indexacion implements IndexacionRemote {
             mapa.put(palabra, nuevo);
         }
     }
-
-    //@TransactionAttribute(REQUIRED)
 
     public void insertar(HashMap<String, VocabularioModel> mapa) {
 
@@ -137,6 +128,7 @@ public class Indexacion implements IndexacionRemote {
 
         it = mapa.keySet().iterator();
 
+        System.out.println("POR CARGAR HASH DE LA DB");
         HashMap<String, PalabraBean> hashDB = pDao.cargarHashPalabras();
         System.out.println("CARGUE HASH PALABRSA DE LA DB");
 
@@ -148,8 +140,8 @@ public class Indexacion implements IndexacionRemote {
 
             documento = new DocumentoBean(today, nombreDoc);
             dDao.insertarDocumentos(documento);
-            idDoc = dDao.getIdDocumento(); 
-           System.out.println("EL HASHMAP TIENE: " + mapa.size() + "PALABRAS");
+            idDoc = dDao.getIdDocumento();
+            System.out.println("EL HASHMAP TIENE: " + mapa.size() + "PALABRAS");
             while (it.hasNext()) {
 
                 key = it.next().toString();
@@ -187,8 +179,6 @@ public class Indexacion implements IndexacionRemote {
         return nombreDoc;
     }
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
     @Override
     public List<DocumentoBean> listarDocumentos() {
         return dDao.obtenerDocumentos();
